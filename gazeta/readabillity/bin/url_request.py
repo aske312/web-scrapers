@@ -3,37 +3,69 @@
 import requests
 import re
 import os
+import json
+from pyparsing import *
 from bs4 import BeautifulSoup
 
 
-class ParserNews:
+class UrlGazetaRu:
     """
     ParserNews - parser of news sites, accepts url to break it down before generating a text report.
     :argument - url
     """
+
     def __init__(self, url):
-        self.headers = {
+        self._url = url
+        self._headers = {
             'accept': 'text/html,application/xhtml+xml,application/xml;'
                       'q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
             'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) '
                           'AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.55 Safari/537.36'
         }
-        self.url = url
+        self.result = {"articles": []}
+        # with open('dump.json', 'r') as dumpfile:
+        #     self.result = json.loads(dumpfile.read())
 
-    def run(self):
-        headline, text = self.url_parser()
-        self.directory_create(path=self.name_file())
-        self.with_file(file_name=self.name_file(), headline=headline, text=self.text_convector(text))
+    def _search(self, url):
+        raw_url = str(url)
+        if re.search('gazeta.ru', raw_url):
+            if re.search('/(n_)?\d+.s?html', raw_url):
+                key, url, headline, text = self._parser(raw_url)
+                self.result['articles'].append({key: [url, headline, text]})
+            else:
+                for url in self._parser_articles(raw_url):
+                    self._url = url
+                    key, url, headline, text = self._parser(url)
+                    self.result['articles'].append({key: [url, headline, text]})
+            return self.result
+        else:
+            raise ValueError
 
-    def url_parser(self):
+    def _parser_articles(self, raw_url):
         s = requests.Session()
-        response = s.get(url=self.url, headers=self.headers)
+        response = s.get(url=raw_url, headers=self._headers)
+        soup = BeautifulSoup(response.text, 'lxml')
+        div_article = soup.findAll("div", {"class": "b_ear-title"})
+        pattern = Regex(r'<a href="([\:\/\w\d\.]+)">').sub(r"\1")
+        url_array = []
+        for found in pattern.searchString(div_article):
+            for url in found:
+                if re.search('https://www.', url):
+                    url_array.append(url)
+                else:
+                    url = 'https://www.gazeta.ru' + url
+                    url_array.append(url)
+        return url_array
+
+    def _parser(self, url):
+        s = requests.Session()
+        response = s.get(url=url, headers=self._headers)
         soup = BeautifulSoup(response.text, 'lxml')
         headline = soup.find('h1')
         text = soup.find_all('p')
-        return headline, text
+        return self._keygen(self._url), url, headline.text, self._text_convector(text)
 
-    def text_convector(self, text):
+    def _text_convector(self, text):
         text_line = []
         for line in text:
             if line.a:
@@ -46,49 +78,22 @@ class ParserNews:
                 text_line.append(txt)
         return text_line
 
-    def name_file(self):
-        if re.findall(r'https://www.', self.url):
-            name_file = self.url.replace('https://www.', '')
-        elif re.findall(r'https://', self.url):
-            name_file = self.url.replace('https://', '')
-        elif re.findall(r'http://', self.url):
-            name_file = self.url.replace('http://', '')
-        else:
-            raise ValueError
-        if name_file[-1] == '/':
-            name_file = name_file[:-1] + '.txt'
-        else:
-            name_file = str(name_file).replace('.shtml', '.txt')
-        return name_file
+    def _keygen(self, raw_url):
+        return int(re.sub(r'(^.+/)(\w_)?(\d{5,})(.\w+$)', r'\3', raw_url))
 
-    def directory_create(self, path):
-        path = path.split('/')
-        directory = os.getcwd()
-        for new in path[:-1]:
-            directory = directory + '/' + new
-        if os.path.isdir(directory):
-            directory = directory + '/' + path[-1]
-        else:
-            os.makedirs(directory)
-
-    def with_file(self, file_name='text.txt', headline=None, text=None):
-        with open(file_name, 'w+') as new_file:
-            new_file.write('\t')
-            for line in headline.text.split()[:-1]:
-                new_file.write(line + ' ')
-            new_file.write(''.join(headline.text.split()[-1:]) + '.\n\n')
-            for line in text:
-                if len(line) > 80:
-                    filter_text = lambda A, n=(len(line.split()) //
-                                               (len(line) // 80 + 1)): [A[i:i + n] for i in range(0, len(A), n)]
-                    new_file.write('\t')
-                    for st in filter_text(line.split()):
-                        new_file.write(' '.join(st) + '\n')
-                    new_file.write('\n')
-                else:
-                    new_file.write('\t' + line + '\n')
-            new_file.close()
+    def runer(self):
+        article = self._search(self._url)
+        print(article)
+        # print(self.result)
+        # with open('dump.json', 'w+') as dumpfile:
+        #     json.dump(self.result, dumpfile)
 
 
 def get_text_form(url='https://www.gazeta.ru/social/news/2021/11/28/n_16931005.shtml'):
-    ParserNews(url=url).run()
+    UrlGazetaRu(url=url).runer()
+
+
+# get_text_form('https://www.gazeta.ru/news/123213.html')
+get_text_form('https://www.gazeta.ru/news/')
+# get_text_form('https://www.gazeta.ru/')
+# get_text_form('https://www.gazeta.ru/social/news/2021/11/28/n_16931005.shtml')

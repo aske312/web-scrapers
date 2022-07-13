@@ -1,0 +1,31 @@
+Funcs: start Calls: <__main__.ScraperRun object at 0x10d0173a0> Types: UnknownSource Value: unknown news source, can't process, check source!
+Funcs: start Calls: <__main__.ScraperRun object at 0x10610d3a0> Types: UnknownSource Value: unknown news source, can't process, check source!
+Funcs: start Calls: <__main__.ScraperRun object at 0x10d1fd3a0> Types: UnknownSource Value: unknown news source, can't process, check source!
+Funcs: start Calls: <__main__.ScraperRun object at 0x1013623a0> Types: UnknownSource Value: unknown news source, can't process, check source!
+Funcs: start Calls: <__main__.ScraperRun object at 0x10f8e23a0> Types: UnknownSource Value: unknown news source, can't process, check source!
+Funcs: start Calls: <__main__.ScraperRun object at 0x10f4d83a0> Types: UnknownSource Value: unknown news source, can't process, check source!
+Funcs: start Calls: <__main__.ScraperRun object at 0x1073493a0> Types: UnknownSource Value: unknown news source, can't process, check source!
+Funcs: start Calls: <__main__.ScraperRun object at 0x10d24f3a0> Types: UnknownSource Value: unknown news source, can't process, check source!
+Funcs: start Calls: <__main__.ScraperRun object at 0x1020383a0> Types: UnknownSource Value: unknown news source, can't process, check source!
+Funcs: start Calls: <__main__.ScraperRun object at 0x10eff83a0> Types: UnknownSource Value: unknown news source, can't process, check source!
+Funcs: start Calls: <__main__.ScraperRun object at 0x10e0053a0> Types: TypeError Value: 'NoneType' object is not callable
+Funcs: start Calls: <__main__.ScraperRun object at 0x10840c3a0> Types: TypeError Value: 'NoneType' object is not callable
+Funcs: start Calls: <__main__.ScraperRun object at 0x10a8ec3a0> Types: TypeError Value: 'NoneType' object is not callable
+Funcs: start Calls: <__main__.ScraperRun object at 0x10ee2d3a0> Types: TypeError Value: expected string or bytes-like object
+Funcs: start Calls: <__main__.ScraperRun object at 0x10627b3a0> Types: TypeError Value: expected string or bytes-like object
+Funcs: start Calls: <__main__.ScraperRun object at 0x10ecd93a0> Types: TypeError Value: expected string or bytes-like object
+Funcs: start Calls: <__main__.ScraperRun object at 0x10709b3a0> Types: TypeError Value: expected string or bytes-like object
+Funcs: start Calls: <__main__.ScraperRun object at 0x1064683a0> Types: TypeError Value: expected string or bytes-like object
+Funcs: start Calls: <__main__.ScraperRun object at 0x10d4a73a0> Types: TypeError Value: expected string or bytes-like object
+Funcs: start Calls: <__main__.ScraperRun object at 0x10ca7f3a0> Types: TypeError Value: expected string or bytes-like object
+Funcs: start Calls: <__main__.ScraperRun object at 0x10b48c3a0> Types: TypeError Value: expected string or bytes-like object
+Funcs: start Calls: <__main__.ScraperRun object at 0x106a983a0> Types: AttributeError Value: 'NoneType' object has no attribute 'text'
+Funcs: start Calls: <__main__.ScraperRun object at 0x100bf83a0> Types: AttributeError Value: 'NoneType' object has no attribute 'text'
+Funcs: start Calls: <__main__.ScraperRun object at 0x103adf3a0> Types: AttributeError Value: 'NoneType' object has no attribute 'text'
+Funcs: start Calls: <__main__.ScraperRun object at 0x105ea23a0> Types: ResponseNotOk Value: Response not ok, maybe time out.
+Funcs: start Calls: <__main__.ScraperRun object at 0x107bad3a0> Types: UnsupportedOperation Value: not readable
+Funcs: start Calls: <__main__.ScraperRun object at 0x10872a3a0> Types: UnsupportedOperation Value: not readable
+Funcs: start Calls: <__main__.ScraperRun object at 0x107b943a0> Types: UnsupportedOperation Value: not readable
+Funcs: start Calls: <__main__.ScraperRun object at 0x1020043a0> Types: UnsupportedOperation Value: not readable
+Funcs: start Calls: <__main__.ScraperRun object at 0x1029053a0> Types: UnsupportedOperation Value: not readable
+Funcs: start Calls: <__main__.ScraperRun object at 0x10db8b3a0> Types: UnsupportedOperation Value: not readable
